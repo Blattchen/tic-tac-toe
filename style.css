@@ -67,6 +67,11 @@ body {
     border-bottom: none;
 }
 
+.cell.x,
+.cell.o {
+    cursor: not-allowed;
+}
+
 .cell.x::after {
     content: "";
     position: absolute;
@@ -83,4 +88,58 @@ body {
     height: var(--cell-mark);
     width: calc(var(--cell-mark)* 0.1);
     transform: rotate(-45deg);
+}
+
+.cell.o::before {
+    content: "";
+    position: absolute;
+    background-color: black;
+    height: calc(var(--cell-mark)* .9);
+    width: calc(var(--cell-mark)* .9);
+    border-radius: 50%;
+}
+
+.cell.o::after {
+    content: "";
+    position: absolute;
+    background-color: white;
+    height: calc(var(--cell-mark)* .7);
+    width: calc(var(--cell-mark)* .7);
+    border-radius: 50%;
+}
+
+.wrapper.x>.cell:not(.x):not(.o):hover::after {
+    content: "";
+    position: absolute;
+    background-color: grey;
+    height: var(--cell-mark);
+    width: calc(var(--cell-mark)* 0.1);
+    transform: rotate(45deg);
+}
+
+.wrapper.x>.cell:not(.x):not(.o):hover::before {
+    content: "";
+    position: absolute;
+    background-color: grey;
+    height: var(--cell-mark);
+    width: calc(var(--cell-mark)* 0.1);
+    transform: rotate(-45deg);
+}
+
+.wrapper.o>.cell:not(.x):not(.o):hover::after {
+    content: "";
+    position: absolute;
+    background-color: white;
+    height: calc(var(--cell-mark)* .7);
+    width: calc(var(--cell-mark)* .7);
+    border-radius: 50%;
+}
+
+.wrapper.o>.cell:not(.x):not(.o):hover::before {
+    content: "";
+    position: absolute;
+    background-color: grey;
+    height: calc(var(--cell-mark)* .9);
+    width: calc(var(--cell-mark)* .9);
+    border-radius: 50%;
 }

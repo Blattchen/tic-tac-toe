@@ -11,7 +11,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    gap: 80px;
     width: 100vw;
     height: 100vh;
 }
@@ -28,7 +28,6 @@ body {
     font-family: Roboto;
     letter-spacing: .5rem;
     padding: 20px;
-    margin-bottom: 80px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     background-color: rgb(226, 226, 226);
     display: flex;
@@ -45,6 +44,7 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
+    cursor: pointer;
 }
 
 .cell:first-child,
@@ -69,7 +69,7 @@ body {
 
 .cell.x,
 .cell.o {
-    cursor: not-allowed;
+    pointer-events: none;
 }
 
 .cell.x::after {
@@ -142,4 +142,72 @@ body {
     height: calc(var(--cell-mark)* .9);
     width: calc(var(--cell-mark)* .9);
     border-radius: 50%;
+}
+
+.info {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: wheat;
+    font-size: 46px;
+    gap: 1rem;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(49, 49, 49, 0.583);
+}
+
+.info button {
+    padding: .2rem .9rem;
+    font-size: 24px;
+    border-radius: .4rem;
+    border: 3px solid lightcoral;
+    background-color: wheat;
+    color: rgb(43, 38, 38);
+}
+
+.info.end {
+    display: flex;
+}
+
+.pickname {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: wheat;
+    font-size: 46px;
+    gap: 1rem;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(49, 49, 49, 0.583);
+}
+
+.pickname.start {
+    display: flex;
+}
+
+.pickname button {
+    padding: .2rem .9rem;
+    font-size: 24px;
+    border-radius: .4rem;
+    border: 3px solid lightcoral;
+    background-color: wheat;
+    color: rgb(43, 38, 38);
+}
+
+.pickname input {
+    outline: none;
+    padding: .2rem .9rem;
+    font-size: 24px;
+    border-radius: .4rem;
+    border: 3px solid lightcoral;
+    background-color: wheat;
+    color: rgb(43, 38, 38);
 }

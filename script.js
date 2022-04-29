@@ -1,12 +1,16 @@
+// TODO
+// integrate playerselection in gamboard to ovveride playername variables 
+// !!!!!
+
 // playerfactory
 const playerFactory = (name, marker) => {
     return { name, marker }
 }
-
-const playerSelection = (() => {
-    let gameStarted = false
-    let renderPlayerOne = ""
-    let renderPlayerTwo = ""
+// gameboard module
+const gameBoard = (() => {
+    // create two players
+    let PLAYER_ONE = playerFactory("Player 1", "x")
+    let PLAYER_TWO = playerFactory("Player 2", "o")
     // get inputs and start button
     const playerOne = document.querySelector(".playerOne")
     const playerTwo = document.querySelector(".playerTwo")
@@ -17,37 +21,17 @@ const playerSelection = (() => {
         if (playerOne.value === "" || playerTwo.value === "") {
             console.log("click")
             window.classList.remove("start")
-            gameBoard.startGame()
+            startGame()
 
         } else {
             console.log("else")
-            renderPlayerOne = playerFactory(playerOne.value, "x")
-            renderPlayerTwo = playerFactory(playerTwo.value, "o")
-            gameStarted = true
-            gameBoard.renderPlayer()
+            PLAYER_ONE = playerFactory(playerOne.value, "x")
+            PLAYER_TWO = playerFactory(playerTwo.value, "o")
             window.classList.remove("start")
-            gameBoard.startGame()
+            startGame()
         }
     })
-    return {
-        renderPlayerOne, renderPlayerTwo, gameStarted
-    }
-})()
-// gameboard module
-const gameBoard = (() => {
-    let gameStarted = playerSelection.gameStarted
-    // create two players
-    let PLAYER_ONE = playerFactory("Player 1", "x")
-    let PLAYER_TWO = playerFactory("Player 2", "o")
-    // function to render the player
-    function renderPlayer() {
-        if (gameStarted) {
-            let renderone = playerSelection.renderPlayerOne
-            let rendertwo = playerSelection.renderPlayerTwo
-            PLAYER_ONE = renderone
-            PLAYER_TWO = rendertwo
-        } else return
-    }
+
     // get player turn div
     const playerTurn = document.querySelector(".playerturn")
     // player turn function
@@ -99,10 +83,13 @@ const gameBoard = (() => {
         const currentClass = turnX ? PLAYER_ONE.marker : PLAYER_TWO.marker
         placeMark(cell, currentClass)
         switchTurn()
-        setBoardHoverClass()
-        playerTurnTxt()
         if (checkWin(currentClass)) {
-            endGame()
+            endGame(false)
+        } else if (isDraw()) {
+            endGame(true)
+        } else {
+            playerTurnTxt()
+            setBoardHoverClass()
         }
     }
     // get the winning text div and container
@@ -111,11 +98,18 @@ const gameBoard = (() => {
     // end game
     function endGame(draw) {
         if (draw) {
-            return
+            winningText.textContent = "It's a Draw"
+            winnigWindow.classList.add("end")
         } else {
-            winningText.textContent = turnX ? `The winner is ${PLAYER_ONE.name}` : `The winner is ${PLAYER_TWO.name}`
+            winningText.textContent = turnX ? `The winner is ${PLAYER_TWO.name}` : `The winner is ${PLAYER_ONE.name}`
             winnigWindow.classList.add("end")
         }
+    }
+    function isDraw() {
+        return [...Board].every(cell => {
+            return cell.classList.contains(PLAYER_ONE.marker) ||
+                cell.classList.contains(PLAYER_TWO.marker)
+        })
     }
 
     // restart the game with button
@@ -141,6 +135,4 @@ const gameBoard = (() => {
 
 
     }
-    return { startGame, renderPlayer }
-
 })();
